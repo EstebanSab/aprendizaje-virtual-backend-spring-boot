@@ -54,6 +54,13 @@ public class UserCredentials {
     private String apellido;
 
 
+    @OneToOne(
+        mappedBy = "usercredentials",
+        orphanRemoval = true
+    )
+    private Student student;
+
+
     public UserCredentials(){}
     public UserCredentials(
         Long documento,
@@ -87,6 +94,10 @@ public class UserCredentials {
 
     public String getApellido() {
         return apellido;
+    }
+
+    public Student getStudent() {
+        return this.student;
     }
 
     public void setDocumento(Long documento) {

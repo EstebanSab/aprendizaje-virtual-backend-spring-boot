@@ -8,11 +8,11 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.campusVirtual.dto.AlumnoEnCursoDto;
-import com.campusVirtual.dto.ProfesorEnCursoDto;
+import com.campusVirtual.dto.StudentInCourseDto;
+import com.campusVirtual.dto.ProfessorInCourseDto;
 import com.campusVirtual.service.IAdminService;
-import com.campusVirtual.service.IAlumnoEnCursoService;
-import com.campusVirtual.service.IProfesorEnCursoService;
+import com.campusVirtual.service.IStudentInCourseService;
+import com.campusVirtual.service.IProfessorInCourseService;
 
 
 
@@ -21,15 +21,15 @@ import com.campusVirtual.service.IProfesorEnCursoService;
 public class AdminController {
     
     @Autowired
-    private IProfesorEnCursoService profesorEnCursoService;
+    private IProfessorInCourseService profesorEnCursoService;
     @Autowired
-    private IAlumnoEnCursoService alumnoEnCursoService;
+    private IStudentInCourseService alumnoEnCursoService;
     @Autowired
     private IAdminService adminService;
 
 
     @PostMapping(path ="/asignar/profesor/{idProfesor}/curso/{idCurso}")
-    public ResponseEntity<ProfesorEnCursoDto> asignarProfesorCurso(
+    public ResponseEntity<ProfessorInCourseDto> asignarProfesorCurso(
         @PathVariable("idProfesor") Long idProfesor,
         @PathVariable("idCurso") Long idCurso){
             
@@ -50,7 +50,7 @@ public class AdminController {
 
     
     @PostMapping(path ="asingnar/alumno/{idAlumno}/curso/{idCurso}")
-    public ResponseEntity<AlumnoEnCursoDto> asignarAlumnoCurso(
+    public ResponseEntity<StudentInCourseDto> asignarAlumnoCurso(
         @PathVariable("idAlumno") Long idAlumno,
         @PathVariable("idCurso") Long idCurso){
             
