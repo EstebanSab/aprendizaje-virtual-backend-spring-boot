@@ -2,25 +2,33 @@ package com.campusVirtual.model;
 
 import javax.persistence.*;
 
-@Entity(name="AlumnoEnCurso")
+
+
+import lombok.Getter;
+import lombok.Setter;
+
+
+@Getter 
+@Setter
+@Entity(name="StudentInCourse")
 @Table(
-    name="alumnoencurso",
+    name="studentInCourse",
     uniqueConstraints = {
         @UniqueConstraint(
-            name="alumnoencuros_id_constraint",columnNames = "id"
+            name="studentInCourse_id_constraint",columnNames = "id"
         )
     }
 )
 public class StudentInCourse {
     @Id
         @SequenceGenerator(
-            name = "generadoIdAlumnoEnCurso",
-            sequenceName = "ALUMNOENCURSO_GENERADOR_ID",
+            name = "generadoIdStudentInCourse",
+            sequenceName = "STUDENTINCOURSE_GENERADOR_ID",
             initialValue=1,
             allocationSize = 1
         )
         @GeneratedValue(
-            generator = "generadoIdAlumnoEnCurso",
+            generator = "generadoIdStudentInCourse",
             strategy = GenerationType.SEQUENCE)
         @Column(
             name = "id",
@@ -33,58 +41,33 @@ public class StudentInCourse {
 
         @ManyToOne()
         @JoinColumn(
-            name="alumno_id",
+            name="student_id",
             nullable = false,
             referencedColumnName = "id",
             foreignKey = 
-                @ForeignKey(name="alumno_curso_id")
+                @ForeignKey(name="student_course_id")
             
         )
-        private Student alumno;
+        private Student student;
 
 
         @ManyToOne()
         @JoinColumn(
-            name="curso_id",
+            name="course_id",
             nullable = false,
             referencedColumnName = "id",
             foreignKey = 
-                @ForeignKey(name="curso_alumno_id")
+                @ForeignKey(name="cpurse_student_id")
             
         )
-        private Course curso;
+        private Course course;
 
 
         public StudentInCourse(){}
 
-        public void setAlumno(Student alumno) {
-            this.alumno = alumno;
+        public StudentInCourse(Student student,Course course){
+            this.student=student;
+            this.course=course;
         }
-        public void setCurso(Course curso) {
-            this.curso = curso;
-        }
-        
-        public void setId(Long id) {
-            this.id = id;
-        }
-
-        public Student getAlumno() {
-            return alumno;
-        }
-
-        public Course getCurso() {
-            return curso;
-        }
-
-        public Long getId() {
-            return this.id;
-        }
-
-        @Override
-        public String toString() {
-            return ""+this.alumno+""+this.curso;
-        }
-
-
     
 }

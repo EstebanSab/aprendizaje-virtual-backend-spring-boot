@@ -11,20 +11,20 @@ import org.hibernate.annotations.OnDeleteAction;
 @Table(
     name="profesor",
     uniqueConstraints = {
-        @UniqueConstraint(name="profesor_id_constraint",columnNames = "id")
+        @UniqueConstraint(name="professor_id_constraint",columnNames = "id")
     }
 )
 public class Professor {
 
         @Id
         @SequenceGenerator(
-            name = "generadoIdProfesor",
-            sequenceName = "PROFESOR_GENERADOR_ID",
+            name = "generadoIdProfessor",
+            sequenceName = "PROFESSOR_GENERADOR_ID",
             initialValue=1,
             allocationSize = 1
         )
         @GeneratedValue(
-            generator = "generadoIdProfesor",
+            generator = "generadoIdProfessor",
             strategy = GenerationType.SEQUENCE)
         @Column(
             name = "id",
@@ -33,87 +33,79 @@ public class Professor {
             unique = true
         )
         private Long id;
-    
-        @Column(
-            name = "nombre",
-            updatable = true,
-            nullable = false,
-            unique = false
-        )
-        private String nombre;
-
 
 
         @Column(
-            name="especialidad",
+            name="especiality",
             updatable =true,
             nullable = false,
             unique = false
         )
-        private String especialidad;
+        private String especiality;
 
 
         @OneToMany(
-            mappedBy = "profesor",
+            mappedBy = "professor",
             orphanRemoval = true,
             cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
             //,fetch = FetchType.EAGER
             )
             @OnDelete(action = OnDeleteAction.CASCADE)
             @LazyCollection(LazyCollectionOption.FALSE)
-        private List<ProfessorInCourse> profesorEnCurso = new ArrayList<ProfessorInCourse>();
+        private List<ProfessorInCourse> professorInCourse = new ArrayList<ProfessorInCourse>();
         
     
-        public void addProfesorEnCurso(ProfessorInCourse profesorEnCurso) {
-            if (!this.profesorEnCurso.contains(profesorEnCurso)) {
-                this.profesorEnCurso.add(profesorEnCurso);
-            }
-        }
+        @OneToOne(cascade = CascadeType.ALL)
+        @JoinColumn(
+            name="user_id",
+            referencedColumnName = "document",
+            foreignKey = @ForeignKey(
+                name = "user_id_fk"
+            )
+        )
+        private UserCredentials userCredentials;
+    
 
 
     
         public Professor(){}
-        public Professor(String nombre,String especialidad){
-            this.nombre = nombre;
-            this.especialidad=especialidad;
+        public Professor(String especiality){
+            this.especiality=especiality;
         }
     
         public Long getId() {
             return this.id;
         }
-    
-        public String getNombre() {
-            return this.nombre;
+        
+        public String getEspeciality() {
+            return this.especiality;
         }
         
-        public String getEspecialidad() {
-            return this.especialidad;
+        public List<ProfessorInCourse> getProfessorInCourse() {
+            return professorInCourse;
         }
-        
+
         public void setId(Long id) {
             this.id = id;
         }
     
-        public void setNombre(String nombre) {
-            this.nombre = nombre;
-        }
-        public void setEspecialidad(String especialidad) {
-            this.especialidad = especialidad;
+        public void setEspeciality(String especiality) {
+            this.especiality = especiality;
         }
 
-        @Override
-        public String toString() {
-    
-        return "profesor: "+this.nombre+", especialidad: "+this.especialidad;
+        public void addProfessorInCourse(ProfessorInCourse professorInCourse) {
+            if (!this.professorInCourse.contains(professorInCourse)) {
+                this.professorInCourse.add(professorInCourse);
+            }
         }
 
 
-
-        public List<ProfessorInCourse> getProfesorEnCurso() {
-            return this.profesorEnCurso;
+        public void setUserCredentials(UserCredentials userCredentials) {
+            this.userCredentials = userCredentials;
         }
 
-
-
-    
+        public UserCredentials getUserCredentials() {
+            return userCredentials;
+        }
+        
     }

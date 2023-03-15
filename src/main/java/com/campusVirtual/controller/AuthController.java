@@ -15,10 +15,6 @@ public class AuthController {
     @Autowired
     UserDetailServiceImplementacion userDetailServiceImplementacion;
     
-    @PostMapping(path ="/login")
-    public String login(){
-        return "login succesful";
-    }
 
     @PostMapping(path ="/register")
     //@PreAuthorize("hasRole('ROLE_ADMIN')")

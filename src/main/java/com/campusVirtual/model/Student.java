@@ -38,8 +38,6 @@ public class Student {
         )
         private Long id;
 
-        
-
 
         @OneToMany(
             mappedBy = "student",
@@ -49,13 +47,13 @@ public class Student {
         )
         @OnDelete(action = OnDeleteAction.CASCADE)
         @LazyCollection(LazyCollectionOption.FALSE)
-        private List<StudentInCourse> alumnoEnCurso = new ArrayList<StudentInCourse>();
+        private List<StudentInCourse> studentInCourse = new ArrayList<StudentInCourse>();
         
 
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(
             name="user_id",
-            referencedColumnName = "documento",
+            referencedColumnName = "document",
             foreignKey = @ForeignKey(
                 name = "user_id_fk"
             )
@@ -68,27 +66,30 @@ public class Student {
             this.id = id;
         }
         
-        public void addAlumnoEnCurso(StudentInCourse alumnoEnCurso) {
-            if (!this.alumnoEnCurso.contains(alumnoEnCurso)) {
-                this.alumnoEnCurso.add(alumnoEnCurso);
-            }
-        }
-
+    
+        
         public void setUserCredentials(UserCredentials userCredentials) {
             this.userCredentials = userCredentials;
         }
 
-        public Long getId() {
-            return this.id;
+        public void addStudentInCourse(StudentInCourse studentInCourse) {
+            if (!this.studentInCourse.contains(studentInCourse)) {
+                this.studentInCourse.add(studentInCourse);
+            }
         }
 
 
-        public List<StudentInCourse> getAlumnoEnCurso() {
-            return this.alumnoEnCurso;
+        public Long getId() {
+            return this.id;
         }
 
         public UserCredentials getUserCredentials() {
             return this.userCredentials;
         }
 
+        public List<StudentInCourse> getStudentInCourse() {
+            return studentInCourse;
+        }
+
+      
 }

@@ -9,23 +9,23 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import javax.persistence.*;
 
-@Entity(name="Curso")
+@Entity(name="Course")
 @Table(
-    name="curso",
+    name="course",
     uniqueConstraints = {
-        @UniqueConstraint(name="cliente_id_constraint",columnNames = "id")
+        @UniqueConstraint(name="course_id_constraint",columnNames = "id")
     }
 )
 public class Course {
     @Id
     @SequenceGenerator(
-        name = "generadoIdCurso",
-        sequenceName = "CURSO_GENERADOR_ID",
+        name = "generadoIdCourse",
+        sequenceName = "COURSE_GENERADOR_ID",
         initialValue=1,
         allocationSize = 1
     )
     @GeneratedValue(
-        generator = "generadoIdCurso",
+        generator = "generadoIdCourse",
         strategy = GenerationType.SEQUENCE)
     @Column(
         name = "id",
@@ -36,88 +36,89 @@ public class Course {
     private Long id;
 
     @Column(
-        name = "nombre",
+        name = "name",
         updatable = true,
         nullable = false,
         unique = false
     )
-    private String nombre;
+    private String name;
 
     
     @OneToMany(
-        mappedBy = "curso",
+        mappedBy = "course",
         orphanRemoval = true,
         cascade = {CascadeType.PERSIST, CascadeType.REMOVE}
         //,fetch = FetchType.EAGER
         )
     @OnDelete(action = OnDeleteAction.CASCADE)
     @LazyCollection(LazyCollectionOption.FALSE)
-    private List<ProfessorInCourse> profesorEnCurso = new ArrayList<ProfessorInCourse>();
+    private List<ProfessorInCourse> professorInCourse = new ArrayList<ProfessorInCourse>();
     //private Ensenia ensenia;
-
-   
-    public void addProfesorEnCurso(ProfessorInCourse profesorEnCurso) {
-        if (!this.profesorEnCurso.contains(profesorEnCurso)) {
-            this.profesorEnCurso.add(profesorEnCurso);
-        }
-    }
-    /*public void removeProfesorEnCurso(ProfesorEnCurso profesorEnCurso) {
-        if (this.profesorEnCurso.contains(profesorEnCurso)) {
-            this.profesorEnCurso.remove(profesorEnCurso);
-        }
-    }*/
 
 
     @OneToMany(
-            mappedBy = "curso",
+            mappedBy = "course",
             orphanRemoval = true,
             cascade ={CascadeType.PERSIST,CascadeType.REMOVE}
             //fetch = FetchType.EAGER
         )
         @OnDelete(action = OnDeleteAction.CASCADE)
         @LazyCollection(LazyCollectionOption.FALSE)
-        private List<StudentInCourse> alumnoEnCurso = new ArrayList<StudentInCourse>();
+        private List<StudentInCourse> studentInCourse = new ArrayList<StudentInCourse>();
         
     
-        public void addAlumnoEnCurso(StudentInCourse alumnoEnCurso) {
-            if (!this.alumnoEnCurso.contains(alumnoEnCurso)) {
-                this.alumnoEnCurso.add(alumnoEnCurso);
-            }
-        }
+       
 
     public Course(){}
-    public Course(String nombre){
-        this.nombre = nombre;
+    public Course(String name){
+        this.name = name;
     }
 
     public Long getId() {
         return id;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return this.name;
+    }
+
+    public List<ProfessorInCourse> getProfessorInCourse() {
+        return this.professorInCourse;
+    }
+
+    public List<StudentInCourse> getStudentInCourse() {
+        return this.studentInCourse;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-    public List<StudentInCourse> getAlumnoEnCurso() {
-        return alumnoEnCurso;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public List<ProfessorInCourse> getProfesorEnCurso() {
-        return profesorEnCurso;
+    public void addProfessorInCourse(ProfessorInCourse professorInCourse) {
+        if (!this.professorInCourse.contains(professorInCourse)) {
+            this.professorInCourse.add(professorInCourse);
+        }
     }
+
+    public void addAlumnoEnCurso(StudentInCourse studentInCourse) {
+        if (!this.studentInCourse.contains(studentInCourse)) {
+            this.studentInCourse.add(studentInCourse);
+        }
+    }
+
+    /*public void removeProfesorEnCurso(ProfesorEnCurso profesorEnCurso) {
+        if (this.profesorEnCurso.contains(profesorEnCurso)) {
+            this.profesorEnCurso.remove(profesorEnCurso);
+        }
+    }*/
+   
+
 
     
-    @Override
-    public String toString() {
-        return "curso: "+this.nombre;
-    }
 
     
     

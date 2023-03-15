@@ -12,12 +12,12 @@ import javax.persistence.*;
 public class UserCredentials {
     @Id
     @Column(
-        name = "documento",
+        name = "document",
         updatable = false,
         nullable = false,
         unique = true
     )
-    private Long documento;
+    private Long document;
 
 
     @Column(
@@ -38,20 +38,20 @@ public class UserCredentials {
     private String authorities = "ROLE_ALUMNO";
 
     @Column(
-        name="nombre",
+        name="name",
         updatable = true,
         nullable = false,
         unique = false
     )
-    private String nombre;
+    private String name;
 
     @Column(
-        name="apellido",
+        name="lastname",
         updatable = true,
         nullable = false,
         unique = false
     )
-    private String apellido;
+    private String lastName;
 
 
     @OneToOne(
@@ -60,23 +60,29 @@ public class UserCredentials {
     )
     private Student student;
 
+    @OneToOne(
+        mappedBy = "usercredentials",
+        orphanRemoval = true
+    )
+    private Professor professor;
+
 
     public UserCredentials(){}
     public UserCredentials(
-        Long documento,
+        Long document,
         String password,
-        String nombre,
-        String apellido){
-        this.documento = documento;
+        String name,
+        String lastName){
+        this.document = document;
         this.password = password;
         this.authorities = "ROLE_ALUMNO";
-        this.nombre = nombre;
-        this.apellido = apellido;
+        this.name = name;
+        this.lastName = lastName;
     }
 
 
-    public Long getDocumento() {
-        return this.documento;
+    public Long getDocument() {
+        return this.document;
     }
 
 
@@ -88,32 +94,44 @@ public class UserCredentials {
         return this.authorities;
     }
 
-    public String getNombre() {
-        return nombre;
+    public String getName() {
+        return this.name;
     }
 
-    public String getApellido() {
-        return apellido;
+    public String getLastName() {
+        return lastName;
     }
 
     public Student getStudent() {
         return this.student;
     }
 
-    public void setDocumento(Long documento) {
-        this.documento = documento;
+    public Professor getProfessor() {
+        return professor;
+    }
+
+    public void setDocument(Long document) {
+        this.document = document;
     }
 
     public void setPassword(String password) {
         this.password = password;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setApellido(String apellido) {
-        this.apellido = apellido;
+    public void setLastName(String lastName) {
+        this.lastName = lastName;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
+    }
+
+    public void setProfessor(Professor professor) {
+        this.professor = professor;
     }
 
     public void addAuthorities(String authorities) {

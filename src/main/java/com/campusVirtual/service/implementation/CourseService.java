@@ -18,7 +18,7 @@ import com.campusVirtual.model.StudentInCourse;
 import com.campusVirtual.model.Course;
 import com.campusVirtual.model.Professor;
 import com.campusVirtual.model.ProfessorInCourse;
-import com.campusVirtual.repository.CursoRepository;
+import com.campusVirtual.repository.CourseRepository;
 import com.campusVirtual.service.ICourseService;
 
 @Service
@@ -28,7 +28,7 @@ public class CourseService implements ICourseService {
     private ProfesorMapper profesorMapper = new ProfesorMapper();
     private AlumnoMapper alumnoMapper = new AlumnoMapper();
     @Autowired
-    private CursoRepository cursoRepository;
+    private CourseRepository cursoRepository;
 
    
 

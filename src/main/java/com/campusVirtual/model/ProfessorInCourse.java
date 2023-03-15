@@ -2,26 +2,31 @@ package com.campusVirtual.model;
 
 import javax.persistence.*;
     
+import lombok.Getter;
+import lombok.Setter;
 
-    @Entity(name="ProfesorEnCurso")
+
+@Getter 
+@Setter
+    @Entity(name="ProfessorInCourse")
     @Table(
-        name="profesorencurso",
+        name="professorInCourse",
         uniqueConstraints = {
             @UniqueConstraint(
-                    name="profesorencurso_id_constraint",
+                    name="professorInCourse_id_constraint",
                     columnNames = "id")
         }
     )
     public class ProfessorInCourse {
         @Id
         @SequenceGenerator(
-            name = "generadoIdProfesorEnCurso",
-            sequenceName = "PROFESORENCURSO_GENERADOR_ID",
+            name = "generadoIdProfessorInCourse",
+            sequenceName = "PROFESSORINCOURSE_GENERADOR_ID",
             initialValue=1,
             allocationSize = 1
         )
         @GeneratedValue(
-            generator = "generadoIdProfesorEnCurso",
+            generator = "generadoIdProfessorInCourse",
             strategy = GenerationType.SEQUENCE)
         @Column(
             name = "id",
@@ -35,59 +40,31 @@ import javax.persistence.*;
 
     @ManyToOne
     @JoinColumn(
-            name = "profesor_id",
+            name = "professor_id",
             nullable = true,
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "profesor_curso_fk"
+                    name = "professor_course_fk"
             )
     )
-    private Professor profesor;
+    private Professor professor;
 
     @ManyToOne
     @JoinColumn(
-            name = "curso_id",
+            name = "course_id",
             nullable = true,
             referencedColumnName = "id",
             foreignKey = @ForeignKey(
-                    name = "curso_profesor_fk"
+                    name = "course_professor_fk"
             )
     )
-    private Course curso;
+    private Course course;
 
         public ProfessorInCourse(){        }
-    public ProfessorInCourse(Professor profesor,Course curso){
-        this.profesor = profesor;
-        this.curso = curso;
+        public ProfessorInCourse(Professor professor,Course course){
+        this.professor = professor;
+        this.course = course;
         }
         
-            public void setProfesor(Professor profesor){
-                this.profesor = profesor;
-            }
 
-            public void setCurso(Course curso){
-                this.curso = curso;
-            }
-            public Course getCurso() {
-                return curso;
-            }
-
-            public Professor getProfesor() {
-                return profesor;
-            }
-
-
-
-            public void setId(Long id) {
-                this.id = id;
-            }
-
-            public Long getId() {
-                return this.id;
-            }
-
-            @Override
-            public String toString() {
-                return ""+this.profesor+""+this.curso;
-            }
-        }
+}
