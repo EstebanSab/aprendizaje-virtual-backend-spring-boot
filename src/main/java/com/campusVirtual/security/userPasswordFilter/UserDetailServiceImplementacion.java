@@ -9,7 +9,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.campusVirtual.model.UserCredentials;
+import com.campusVirtual.model.Userdata;
 import com.campusVirtual.repository.UserCredentialsRepository;
 import com.campusVirtual.dto.UserRegisterDto;
 import com.campusVirtual.exception.UserNotFoundException;
@@ -26,7 +26,7 @@ public class UserDetailServiceImplementacion implements UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String dniString) throws UsernameNotFoundException { 
         Long dni = Long.parseLong(dniString); 
-        UserCredentials  UserAuth = this.authCredentialsRepository.findById(dni).orElseThrow(()-> new UserNotFoundException(dni));
+        Userdata  UserAuth = this.authCredentialsRepository.findById(dni).orElseThrow(()-> new UserNotFoundException(dni));
         //AuthCredentials  UserAuth = new AuthCredentials(dni, "juan","a");
         return new UserDetailsImplementacion(UserAuth);
     }
@@ -53,9 +53,9 @@ public class UserDetailServiceImplementacion implements UserDetailsService{
 	
         userCredentials.setPassword(passwordEncoder.encode(userCredentials.getPassword()));
 		
-		this.authCredentialsRepository.save(new UserCredentials(userCredentials.getDocumento(),
+		this.authCredentialsRepository.save(new Userdata(userCredentials.getDocumento(),
         userCredentials.getPassword(),
-        userCredentials.getNombre(),userCredentials.getApellido()));
+        userCredentials.getNombre(),userCredentials.getApellido(),userCredentials.getMail()));
 		
 		
 		return  " your registration was successful!";

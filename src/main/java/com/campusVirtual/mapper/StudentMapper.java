@@ -1,12 +1,8 @@
 package com.campusVirtual.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import com.campusVirtual.dto.StudentInCourseDto;
-import com.campusVirtual.model.StudentInCourse;
 
-public class StudentInCourseMapper {
+public class StudentMapper {/* 
     
     
     public StudentInCourseDto  alumnoEnCursoToDto(StudentInCourseDto aecNoDto){
@@ -33,5 +29,5 @@ public class StudentInCourseMapper {
     }
 
 
-    
+    */
 }

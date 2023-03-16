@@ -1,17 +1,9 @@
 package com.campusVirtual.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.campusVirtual.dto.CourseDto;
-import com.campusVirtual.model.StudentInCourse;
-import com.campusVirtual.model.Course;
-import com.campusVirtual.model.ProfessorInCourse;
-import com.campusVirtual.service.ICourseService;
 
 public class CourseMapper {
+    /* 
 
     @Autowired
     ICourseService cursoService;
@@ -65,4 +57,5 @@ public class CourseMapper {
         
         return cursosDto;
     }
+*/
 }

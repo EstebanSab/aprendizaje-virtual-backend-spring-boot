@@ -13,7 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping(path="v1/profesor")
-public class ProfessorController {
+public class ProfessorController {/* 
 
     @Autowired
     private IProfessorService profesorService;
@@ -52,5 +52,5 @@ public class ProfessorController {
         return ResponseEntity.noContent().build();
     }
 
-
+    */
 }

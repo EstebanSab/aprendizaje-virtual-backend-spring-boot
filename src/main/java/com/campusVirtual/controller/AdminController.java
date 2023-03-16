@@ -8,8 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import com.campusVirtual.dto.StudentInCourseDto;
-import com.campusVirtual.dto.ProfessorInCourseDto;
+import com.campusVirtual.model.StudentInCourse;
 import com.campusVirtual.service.IAdminService;
 import com.campusVirtual.service.IStudentInCourseService;
 import com.campusVirtual.service.IProfessorInCourseService;
@@ -21,56 +20,56 @@ import com.campusVirtual.service.IProfessorInCourseService;
 public class AdminController {
     
     @Autowired
-    private IProfessorInCourseService profesorEnCursoService;
+    private IProfessorInCourseService picService;
     @Autowired
-    private IStudentInCourseService alumnoEnCursoService;
+    private IStudentInCourseService sicService;
     @Autowired
     private IAdminService adminService;
 
 
-    @PostMapping(path ="/asignar/profesor/{idProfesor}/curso/{idCurso}")
-    public ResponseEntity<ProfessorInCourseDto> asignarProfesorCurso(
-        @PathVariable("idProfesor") Long idProfesor,
-        @PathVariable("idCurso") Long idCurso){
+    @PostMapping(path ="/set/professor/{idProfessor}/course/{idCourse}")
+    public ResponseEntity<?> asignarProfesorCurso(
+        @PathVariable("idProfessor") Long idProfessor,
+        @PathVariable("idCourse") Long idCourse){
             
-            return  ResponseEntity.status(HttpStatus.CREATED)
-            .body(this.profesorEnCursoService.asignarProfesorCurso(idProfesor,idCurso));
-    }
+           this.picService.setProfessorInCourse(idProfessor,idCourse);
+            return ResponseEntity.status(HttpStatus.CREATED).build();
+        }
 
-    @DeleteMapping(path ="/desvincular/profesor/{idProfesor}/curso/{idCurso}")
+    @DeleteMapping(path ="/delete/professor/{idProfessor}/course/{idCourse}")
     public ResponseEntity<?> desvincularProfesorCurso(
-        @PathVariable("idProfesor") Long idProfesor,
-        @PathVariable("idCurso") Long idCurso){
+        @PathVariable("idProfessor") Long idProfessor,
+        @PathVariable("idCourse") Long idCourse){
             
-            this.profesorEnCursoService.desvincularProfesorCurso(idProfesor,idCurso);
+            this.picService.deleteProfessorInCourse(idProfessor,idCourse);
             return ResponseEntity.noContent().build();
         }
 
 
 
     
-    @PostMapping(path ="asingnar/alumno/{idAlumno}/curso/{idCurso}")
-    public ResponseEntity<StudentInCourseDto> asignarAlumnoCurso(
-        @PathVariable("idAlumno") Long idAlumno,
-        @PathVariable("idCurso") Long idCurso){
+    @PostMapping(path ="set/student/{idStudent}/course/{idCourse}")
+    public ResponseEntity<StudentInCourse> asignarAlumnoCurso(
+        @PathVariable("idStudent") Long idStudent,
+        @PathVariable("idCourse") Long idCourse){
             
             return  ResponseEntity.status(HttpStatus.CREATED)
-            .body(this.alumnoEnCursoService.asignarAlumnoCurso(idAlumno,idCurso));
+            .body(this.sicService.setStudentInCourse(idStudent,idCourse));
     }
 
-    @DeleteMapping(path ="/desvincular/alumno/{idAlumno}/curso/{idCurso}")
+    @DeleteMapping(path ="/delete/student/{idStudent}/course/{idCourse}")
     public ResponseEntity<?> desvincularAlumnoCurso(
-        @PathVariable("idAlumno") Long idAlumno,
-        @PathVariable("idCurso") Long idCurso){
+        @PathVariable("idStudent") Long idStudent,
+        @PathVariable("idCourse") Long idCourse){
             
-        this.alumnoEnCursoService.desvincularAlumnoCurso(idAlumno,idCurso);
+        this.sicService.deleteStudentInCourse(idStudent,idCourse);
         return ResponseEntity.noContent().build();
     }
    
     @PostMapping(path ="user/{id}/role/admin")
     public void asignarRoleUser(
         @PathVariable("id") Long id){
-         this.adminService.asignarRoleUser("ROLE_ADMIN", id);             
+         this.adminService.setRoleUser("ROLE_ADMIN", id);             
         }
     
 

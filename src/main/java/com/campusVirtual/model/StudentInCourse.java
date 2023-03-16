@@ -12,7 +12,7 @@ import lombok.Setter;
 @Setter
 @Entity(name="StudentInCourse")
 @Table(
-    name="studentInCourse",
+    name="studentincourse",
     uniqueConstraints = {
         @UniqueConstraint(
             name="studentInCourse_id_constraint",columnNames = "id"

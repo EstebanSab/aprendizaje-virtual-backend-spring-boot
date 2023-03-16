@@ -3,24 +3,19 @@ package com.campusVirtual.service;
 import java.util.List;
 
 import com.campusVirtual.dto.CourseDto;
-import com.campusVirtual.dto.ProfessorDto;
 import com.campusVirtual.model.Professor;
 
 public interface IProfessorService {
-    
-    public Professor saveProfesorNoDto(Professor profesor);
-    
-    public Professor getProfesorNoDtoById(Long id);
-    
-    public ProfessorDto saveProfesorDto(ProfessorDto profesorDto);
-    
-    public ProfessorDto getProfesorDtoById(Long id);
+    public void saveProfessor(Professor professor,Long document);
 
-    public List<ProfessorDto> getAllProfesorDto();
+    public Professor getProfessorById(Long idProfessor);
 
-    public List<CourseDto> getAllCursosProfesor(Long idProfesor);
+    public List<Professor> getAllProfessors();
+    
+    public List<CourseDto> getAllCoursesProfessor(Long idProfessor);
 
-    public void deleteProfesorById(Long idProfesor);
-
-    public boolean existsProfesorById(Long idProfesor);
+    public boolean existProfessorById(Long idProfessor);
+    
+    public void deleteProfessorById(Long idProfessor);
+   
 }

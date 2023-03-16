@@ -13,15 +13,19 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.campusVirtual.dto.UserRegisterDto;
 import com.campusVirtual.model.Student;
+import com.campusVirtual.model.Userdata;
 import com.campusVirtual.model.Course;
 import com.campusVirtual.model.Professor;
 import com.campusVirtual.security.userPasswordFilter.UserDetailServiceImplementacion;
-import com.campusVirtual.service.IAdminService;
-import com.campusVirtual.service.implementation.StudentInCourseService;
+import com.campusVirtual.service.ICourseService;
+import com.campusVirtual.service.IProfessorInCourseService;
+import com.campusVirtual.service.IProfessorService;
+import com.campusVirtual.service.IStudentInCourseService;
+import com.campusVirtual.service.IStudentService;
+import com.campusVirtual.service.IUserDataService;
 import com.campusVirtual.service.implementation.StudentService;
-import com.campusVirtual.service.implementation.CourseService;
-import com.campusVirtual.service.implementation.ProfessorInCourseService;
-import com.campusVirtual.service.implementation.ProfessorService;
+
+import lombok.val;
 
 
 @SpringBootApplication
@@ -30,55 +34,51 @@ public class CampusApiApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(CampusApiApplication.class, args);
 	}
-
+ 
 	@Bean
     CommandLineRunner commandLineRunner(
-            ProfessorService profesorService,
-			CourseService cursoService,
-			StudentService alumnoService,
-			ProfessorInCourseService profesorEnCursoService,
-			StudentInCourseService alumnoEnCursoService,
-			PasswordEncoder passwordEncoder,
-			UserDetailServiceImplementacion udsi,
-			IAdminService ias){
+			IStudentService studentService,
+			IUserDataService userDataService,
+			IProfessorService professorService,
+			ICourseService ico,
+			IProfessorInCourseService pic,
+			IStudentInCourseService sic
+			){
 	return args -> {
-	Professor proIngles=profesorService.saveProfesorNoDto(new Professor("matias","ingles"));
-	Professor proIngles2=profesorService.saveProfesorNoDto(new Professor("matia22s","ingles"));
-	profesorService.saveProfesorNoDto(new Professor("pablo","matematica"));
-	Professor proRedes=profesorService.saveProfesorNoDto(new Professor("Juan","redes"));
-	
-	
-	Course redes=cursoService.saveCursoNoDto(new Course("redes"));
-	Course ingles=cursoService.saveCursoNoDto(new Course("ingles"));
-	Course ingles2=cursoService.saveCursoNoDto(new Course("ingles avanzado"));
-	Course ingles3=cursoService.saveCursoNoDto(new Course("ingles medio"));
-	
-	
+		
+		userDataService.saveUser(new Userdata((long)111,"pass","name","last","mail"));
+		studentService.saveStudent(new Student(), (long)111);
 
-	profesorEnCursoService.asignarProfesorCurso(proRedes.getId(), redes.getId());
-	profesorEnCursoService.asignarProfesorCurso(proIngles.getId(), ingles.getId());
-	profesorEnCursoService.asignarProfesorCurso(proIngles.getId(), ingles2.getId());
-	profesorEnCursoService.asignarProfesorCurso(proIngles.getId(), ingles3.getId());
-	profesorEnCursoService.asignarProfesorCurso(proIngles2.getId(), ingles3.getId());
-	
-	System.out.println(profesorService.getProfesorNoDtoById(proIngles.getId()).getProfesorEnCurso());	
+		userDataService.saveUser(new Userdata((long)222,"pass","name","last","mail1"));
+		studentService.saveStudent(new Student(), (long)222);
 
-	Student alumno1 =alumnoService.saveAlumnoNoDto(new Student("Pablo"));
-	Student alumno2 =alumnoService.saveAlumnoNoDto(new Student("juan"));
+		
 
-	Student alumno3 =alumnoService.saveAlumnoNoDto(new Student("ro"));
-	Student alumno4 =alumnoService.saveAlumnoNoDto(new Student("tiago"));
+		userDataService.saveUser(new Userdata((long)333,"pass","name","last","ad1"));
+		professorService.saveProfessor(new Professor("ingles"), (long)333);
+		
+		userDataService.saveUser(new Userdata((long)444,"pass","name","last","ad2"));
+		professorService.saveProfessor(new Professor("redes"), (long)444);
 
-	alumnoEnCursoService.asignarAlumnoCurso(alumno1.getId(),ingles.getId());
-	alumnoEnCursoService.asignarAlumnoCurso(alumno2.getId(),ingles.getId());
-	alumnoEnCursoService.asignarAlumnoCurso(alumno2.getId(),redes.getId());
-	alumnoEnCursoService.asignarAlumnoCurso(alumno3.getId(),redes.getId());
-	alumnoEnCursoService.asignarAlumnoCurso(alumno4.getId(),redes.getId());
+		
+		ico.saveCourse(new Course("Ingles"));
+		ico.saveCourse(new Course("reded"));
+		ico.saveCourse(new Course("redes"));
 
-	
-	udsi.saveUser(new UserRegisterDto((long)1,"1", "admin", "admin"));
-	ias.asignarRoleUser("ROLE_ADMIN",(long)1);
-		};
+		pic.setProfessorInCourse((long)1, (long)1);
+		pic.setProfessorInCourse((long)2, (long)3);
+
+		sic.setStudentInCourse((long)1, (long)1);
+		sic.setStudentInCourse((long)2, (long)1);
+		
+		System.out.println(
+		ico.getAllProfessorsOfCourse((long)1)
+		);
+		System.out.println(
+		ico.getAllStudentsOfCourse((long)1)
+		);
+		
+	};
 	
 	}
 
@@ -95,7 +95,6 @@ public class CampusApiApplication {
         		}
   		  };
 	}
-	
 	
 
 }

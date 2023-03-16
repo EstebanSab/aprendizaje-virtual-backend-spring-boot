@@ -6,13 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.campusVirtual.dto.StudentDto;
-import com.campusVirtual.dto.CourseDto;
-import com.campusVirtual.dto.ProfessorDto;
+
 import com.campusVirtual.exception.CursoNotFoundException;
-import com.campusVirtual.mapper.AlumnoMapper;
-import com.campusVirtual.mapper.CourseMapper;
-import com.campusVirtual.mapper.ProfesorMapper;
 import com.campusVirtual.model.Student;
 import com.campusVirtual.model.StudentInCourse;
 import com.campusVirtual.model.Course;
@@ -24,89 +19,73 @@ import com.campusVirtual.service.ICourseService;
 @Service
 public class CourseService implements ICourseService {
 
-    private CourseMapper cursoMapper = new CourseMapper();
-    private ProfesorMapper profesorMapper = new ProfesorMapper();
-    private AlumnoMapper alumnoMapper = new AlumnoMapper();
-    @Autowired
-    private CourseRepository cursoRepository;
-
-   
-
-    @Override
-    public CourseDto saveCursoDto(CourseDto cursoDto) {
-       Course nuevoCurso = cursoMapper.cursoDtoToCurso(cursoDto);
-       nuevoCurso = this.cursoRepository.save(nuevoCurso);
-
-       CourseDto cursoDtos=this.cursoMapper.cursoToCursoDto(nuevoCurso);
     
-        return cursoDtos;
+    @Autowired
+    private CourseRepository courseRepository;
+
+   
+
+   
+
+    @Override
+    public Course saveCourse(Course course){
+        return this.courseRepository.save(course);
     }
 
     @Override
-    public Course saveCursoNoDto(Course curso){
-        return this.cursoRepository.save(curso);
+    public Course getCourseById(Long id){
+        return this.courseRepository.findById(id).orElseThrow(()-> new CursoNotFoundException(id));
     }
 
-    @Override
-    public Course getCursoNoDtoById(Long id){
-        return this.cursoRepository.findById(id).orElseThrow(()-> new CursoNotFoundException(id));
-    }
 
     @Override
-    public CourseDto getCursoDtoById(Long id){
-        Course curso = this.cursoRepository.findById(id).orElseThrow(()-> new CursoNotFoundException(id));;
-        return cursoMapper.cursoToCursoDto(curso); 
-    }
+    public List<Course> getAllCourses(){
+        return this.courseRepository.findAll();
+        }
 
     @Override
-    public List<CourseDto> getAllCursosDto(){
-        List<CourseDto> cursoDto = cursoMapper.manyCursoToCursoDto(
-            this.cursoRepository.findAll());
-        
-      return cursoDto; 
-    } 
-
-    @Override
-    public void deleteCursoById(Long idCurso){
-        if(this.cursoRepository.existsById(idCurso)){
-            this.cursoRepository.deleteById(idCurso);
+    public void deleteCursoById(Long idCourse){
+        if(this.courseRepository.existsById(idCourse)){
+            this.courseRepository.deleteById(idCourse);
         }else{
-            throw new CursoNotFoundException(idCurso);
+            throw new CursoNotFoundException(idCourse);
         }
     }
 
     @Override
-    public boolean existsCursoById(Long idCurso) {
-        return this.cursoRepository.existsById(idCurso);
+    public boolean existsCursoById(Long idCourse) {
+        return this.courseRepository.existsById(idCourse);
     }
 
    
 
     @Override
-    public List<ProfessorDto> getAllProfesoresOfCurso(Long idCurso) {
-        Course curso = this.cursoRepository.findById(idCurso).orElseThrow(()-> new CursoNotFoundException(idCurso));
+    public List<Professor> getAllProfessorsOfCourse(Long idCourse) {
+        Course course = this.courseRepository.findById(idCourse).orElseThrow(()-> new CursoNotFoundException(idCourse));
         
-        List<ProfessorInCourse> profesoresRelacion=curso.getProfesorEnCurso();
+        List<ProfessorInCourse> professorsRelation=course.getProfessorInCourse();
         
-        List<Professor> profesores=new ArrayList<>();
-        for (ProfessorInCourse profesor : profesoresRelacion) {
-            profesores.add(profesor.getProfesor());
+        List<Professor> professors=new ArrayList<>();
+        for (ProfessorInCourse professor : professorsRelation) {
+            professors.add(professor.getProfessor());
         }
-        return this.profesorMapper.manyProfesorToProfesorDto(profesores);
+        return professors;
     }
 
     @Override
-    public List<StudentDto> getAllAlumnosOfCurso(Long idCurso) {
-        Course curso = this.cursoRepository.findById(idCurso).orElseThrow(()-> new CursoNotFoundException(idCurso));
+    public List<Student> getAllStudentsOfCourse(Long idCourse) {
+        Course course = this.courseRepository.findById(idCourse).orElseThrow(()-> new CursoNotFoundException(idCourse));
         
-        List<StudentInCourse> alumnosRelacion=curso.getAlumnoEnCurso();
+        List<StudentInCourse> studentsRelation=course.getStudentInCourse();
         
-        List<Student> alumnos=new ArrayList<>();
-        for (StudentInCourse alumno : alumnosRelacion) {
-            alumnos.add(alumno.getAlumno());
+        List<Student> students=new ArrayList<>();
+        for (StudentInCourse studentR : studentsRelation) {
+            students.add(studentR.getStudent());
         }
-        return this.alumnoMapper.manyAlumnoToAlumnoDto(alumnos);
+        return students;
     }
+
+
 
    
     

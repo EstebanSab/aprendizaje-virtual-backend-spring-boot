@@ -13,6 +13,6 @@ public interface StudentInCourseRepository extends JpaRepository<StudentInCourse
     @Modifying
     @Query(value = "DELETE FROM AlumnoEnCurso aec where aec.alumno_id = ?1 and aec.curso_id = ?2",
     nativeQuery = true)
-    void deleteAlumnoEnCursoByBothId(Long idAlumno, Long idCurso);
+    void deleteStudentInCourseByBothId(Long idAlumno, Long idCurso);
      
 }

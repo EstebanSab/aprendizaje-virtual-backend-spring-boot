@@ -1,12 +1,7 @@
 package com.campusVirtual.mapper;
 
-import java.util.ArrayList;
-import java.util.List;
 
-import com.campusVirtual.dto.ProfessorInCourseDto;
-import com.campusVirtual.model.ProfessorInCourse;
-
-public class ProfessorInCourseMapper {
+public class ProfessorMapper {/* 
     public ProfessorInCourseDto profesorEnCursoToDto(ProfessorInCourse profesorEnCurso){
        ProfessorInCourseDto pecdto = new ProfessorInCourseDto();
 
@@ -25,5 +20,5 @@ public class ProfessorInCourseMapper {
             profesorEnCursoDtos.add(profesorEnCursoToDto(profesorEnCurso));
        }
        return profesorEnCursoDtos;
-    }
+    }*/
 }

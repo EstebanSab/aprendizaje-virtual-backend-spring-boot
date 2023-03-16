@@ -7,7 +7,7 @@ import java.util.Collection;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import com.campusVirtual.model.UserCredentials;
+import com.campusVirtual.model.Userdata;
 
 import lombok.AllArgsConstructor;
 
@@ -15,7 +15,7 @@ import lombok.AllArgsConstructor;
 @AllArgsConstructor
 public class UserDetailsImplementacion implements UserDetails {
 
-    private final UserCredentials userAuth;
+    private final Userdata userAuth;
 
 
     @Override

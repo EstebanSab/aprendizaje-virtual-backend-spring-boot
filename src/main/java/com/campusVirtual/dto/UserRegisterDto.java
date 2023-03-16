@@ -11,6 +11,7 @@ public class UserRegisterDto {
     private String password;
     private String nombre;
     private String apellido;
+    private String mail;
 
     public UserRegisterDto(){}
 

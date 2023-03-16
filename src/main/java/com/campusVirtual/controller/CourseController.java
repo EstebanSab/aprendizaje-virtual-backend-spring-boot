@@ -14,7 +14,7 @@ import com.campusVirtual.service.ICourseService;
 
 @RestController
 @RequestMapping(path="v1/cursos")
-public class CourseController {
+public class CourseController {/*
     
     @Autowired
     private ICourseService cursoService;
@@ -61,5 +61,5 @@ public class CourseController {
         this.cursoService.deleteCursoById(id);
         return ResponseEntity.noContent().build();
     }
-
+ */
 }

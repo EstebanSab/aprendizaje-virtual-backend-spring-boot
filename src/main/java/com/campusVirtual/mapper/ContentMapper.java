@@ -1,5 +1,5 @@
 package com.campusVirtual.mapper;
 
-public class ContentInCourseMapper {
+public class ContentMapper {
     
 }

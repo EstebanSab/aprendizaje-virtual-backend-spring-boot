@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
     @Entity(name="ProfessorInCourse")
     @Table(
-        name="professorInCourse",
+        name="professorincourse",
         uniqueConstraints = {
             @UniqueConstraint(
                     name="professorInCourse_id_constraint",

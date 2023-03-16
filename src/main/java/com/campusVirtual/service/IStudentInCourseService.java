@@ -1,10 +1,10 @@
 package com.campusVirtual.service;
 
-import com.campusVirtual.dto.StudentInCourseDto;
+import com.campusVirtual.model.StudentInCourse;
 
 public interface IStudentInCourseService{
-    public StudentInCourseDto asignarAlumnoCurso(Long alumnoId,Long cursoId);
-    
-    public void desvincularAlumnoCurso(Long idAlumno, Long idCurso);
+    public StudentInCourse setStudentInCourse(Long idStudent,Long idCourse);
+        
+    public void deleteStudentInCourse(Long idStudent,Long idCourse);
        
 }

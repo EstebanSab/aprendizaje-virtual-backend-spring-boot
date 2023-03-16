@@ -4,10 +4,7 @@ package com.campusVirtual.service.implementation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.campusVirtual.dto.StudentInCourseDto;
-import com.campusVirtual.exception.AlumnoNotFoundException;
-import com.campusVirtual.exception.CursoNotFoundException;
-import com.campusVirtual.mapper.StudentInCourseMapper;
+
 import com.campusVirtual.model.Student;
 import com.campusVirtual.model.StudentInCourse;
 import com.campusVirtual.model.Course;
@@ -19,48 +16,24 @@ import com.campusVirtual.service.ICourseService;
 @Service
 public class StudentInCourseService  implements IStudentInCourseService{
     
-    private StudentInCourseMapper alumnoEnCursoMapper = new StudentInCourseMapper();
-    
     @Autowired
-    private IStudentService alumnoService;
+    private IStudentService studentService;
     @Autowired
-    private ICourseService cursoService;
+    private ICourseService courseService;
     @Autowired
-    private StudentInCourseRepository alumnoEnCursoRepository;
+    private StudentInCourseRepository sicRepository;
 
    
 
     @Override
-    public StudentInCourseDto asignarAlumnoCurso(Long alumnoId,Long cursoId){
-        Student alumno = this.alumnoService.getAlumnoNoDtoById(alumnoId);
-        Course curso = this.cursoService.getCursoNoDtoById(cursoId);
-
-        StudentInCourseDto alumnoEnCurso = new StudentInCourseDto();
-        alumnoEnCurso.setAlumno(alumno);
-        alumnoEnCurso.setCurso(curso);
-
-        alumnoEnCurso = this.alumnoEnCursoRepository.save(alumnoEnCurso);
-
-        alumno.addAlumnoEnCurso(alumnoEnCurso);
-        curso.addAlumnoEnCurso(alumnoEnCurso);
-
-        cursoService.saveCursoNoDto(curso);
-        alumnoService.saveAlumnoNoDto(alumno);
-    
-        return alumnoEnCursoMapper.alumnoEnCursoToDto(alumnoEnCurso);
+    public StudentInCourse setStudentInCourse(Long idStudent, Long idCourse) {
+        Student student= this.studentService.getStudentById(idStudent);
+        Course course=this.courseService.getCourseById(idCourse);
+        return this.sicRepository.save(new StudentInCourse(student,course));
     }
-
     @Override
-    public void desvincularAlumnoCurso(Long idAlumno, Long idCurso) {
-        if(!this.alumnoService.existsAlumnoById(idAlumno)){
-            throw new AlumnoNotFoundException(idAlumno);
-        }
-
-        if(!this.cursoService.existsCursoById(idCurso)){
-            throw new CursoNotFoundException(idCurso);
-        }
-       
-        this.alumnoEnCursoRepository.deleteAlumnoEnCursoByBothId(idAlumno,idCurso);
+    public void deleteStudentInCourse(Long idStudent, Long idCourse) {
+        this.sicRepository.deleteStudentInCourseByBothId(idStudent,idCourse);
     }
 }
 

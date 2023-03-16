@@ -6,83 +6,57 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.campusVirtual.dto.CourseDto;
-import com.campusVirtual.dto.ProfessorDto;
 import com.campusVirtual.exception.ProfesorNotFoundException;
-import com.campusVirtual.mapper.ProfesorMapper;
-import com.campusVirtual.mapper.CourseMapper;
 import com.campusVirtual.model.Professor;
 import com.campusVirtual.repository.ProfessorRepository;
 import com.campusVirtual.service.IProfessorService;
+import com.campusVirtual.service.IUserDataService;
 
 @Service
 public class ProfessorService implements IProfessorService{
-    
+
     @Autowired
-    ProfessorRepository profesorRepository;
-    ProfesorMapper profesorMapper = new ProfesorMapper();
-    private CourseMapper cursoMapper = new CourseMapper();
+    private ProfessorRepository professorRepository;
 
+    @Autowired
+    private IUserDataService userDataService; 
 
     @Override
-    public Professor saveProfesorNoDto(Professor profesor) {
-        return this.profesorRepository.save(profesor);
-    }
-    
-    @Override
-    public Professor getProfesorNoDtoById(Long id) {
-        return this.profesorRepository.findById(id).orElseThrow(()-> new ProfesorNotFoundException(id));
-    }
-    
-    @Override
-    public ProfessorDto saveProfesorDto(ProfessorDto profesorDto) {
-        Professor profesor = this.profesorMapper.profesorDtoToProfesor(profesorDto);
-        
-        profesor = this.profesorRepository.save(profesor);
-
-        ProfessorDto profesorDtoCreado = this.profesorMapper.profesorToProfesorDto(profesor);
-        
-        return profesorDtoCreado;
-    }
-    
-    @Override
-    public ProfessorDto getProfesorDtoById(Long id) {
-        Professor profesor= this.profesorRepository.findById(id).orElseThrow(()-> new ProfesorNotFoundException(id));
-        
-        ProfessorDto profesorDto =  profesorMapper.profesorToProfesorDto(profesor);
-        
-        return profesorDto;
+    public void saveProfessor(Professor professor, Long document) {
+        Professor profesorSet = this.professorRepository.save(professor);
+        profesorSet.setUser(this.userDataService.getUserById(document));
+        this.professorRepository.save(profesorSet);
     }
 
     @Override
-    public List<ProfessorDto> getAllProfesorDto(){
-        List<Professor> profesores =this.profesorRepository.findAll();
-        
-        List<ProfessorDto> profesoresDto = profesorMapper.manyProfesorToProfesorDto(profesores);
-        
-        return profesoresDto;
+    public Professor getProfessorById(Long idProfessor) {
+      return  this.professorRepository.findById(idProfessor).get();
     }
 
     @Override
-    public List<CourseDto> getAllCursosProfesor(Long idProfesor){
-        Professor profesorById = this.profesorRepository.findById(idProfesor).get();
-        
-        List<CourseDto> cursosProfesorById= cursoMapper.manyProfesorEnCursoToCursoDto(profesorById.getProfesorEnCurso()); 
-        
-        return cursosProfesorById;
+    public List<Professor> getAllProfessors() {
+        return  this.professorRepository.findAll();  
     }
 
     @Override
-    public void deleteProfesorById(Long idProfesor){
-        if(this.profesorRepository.existsById(idProfesor)){
-            this.profesorRepository.deleteById(idProfesor);
+    public List<CourseDto> getAllCoursesProfessor(Long idProfessor) {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getAllCoursesProfessor'");
+    }
+
+    @Override
+    public boolean existProfessorById(Long idProfessor) {
+      return this.professorRepository.existsById(idProfessor);
+    }
+
+    @Override
+    public void deleteProfessorById(Long idProfessor) {
+        if(this.professorRepository.existsById(idProfessor)){
+            this.professorRepository.deleteById(idProfessor);
         }else{
-            throw new ProfesorNotFoundException(idProfesor);
+            throw new ProfesorNotFoundException(idProfessor);
         }
-        
     }
-
-    @Override
-    public boolean existsProfesorById(Long idProfesor) {
-        return this.profesorRepository.existsById(idProfesor);
-    }
+    
+   
 }

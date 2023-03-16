@@ -3,13 +3,13 @@ package com.campusVirtual.model;
 import javax.persistence.*;
 
 
-@Entity(name = "UserCredentials")
+@Entity(name = "Userdata")
 @Table(
-    name="usercredentials",
+    name="userdata",
     uniqueConstraints = {
-        @UniqueConstraint(name="user_dni_constraint",columnNames = "documento")
+        @UniqueConstraint(name="user_dni_constraint",columnNames = "document")
     })
-public class UserCredentials {
+public class Userdata {
     @Id
     @Column(
         name = "document",
@@ -28,6 +28,14 @@ public class UserCredentials {
     )
     private String password;
 
+    @Column(
+        name="mail",
+        updatable = true,
+        nullable = false,
+        unique = true
+    )
+    private String mail;
+
 
     @Column(
         name="authorities",
@@ -35,7 +43,7 @@ public class UserCredentials {
         nullable = false,
         unique = false
     )
-    private String authorities = "ROLE_ALUMNO";
+    private String authorities = "ROLE_STUDENT";
 
     @Column(
         name="name",
@@ -53,31 +61,32 @@ public class UserCredentials {
     )
     private String lastName;
 
-
+    
     @OneToOne(
-        mappedBy = "usercredentials",
+        mappedBy = "user",
         orphanRemoval = true
     )
     private Student student;
 
     @OneToOne(
-        mappedBy = "usercredentials",
+        mappedBy = "user",
         orphanRemoval = true
     )
     private Professor professor;
 
-
-    public UserCredentials(){}
-    public UserCredentials(
+    public Userdata(){}
+    public Userdata(
         Long document,
         String password,
         String name,
-        String lastName){
+        String lastName,
+        String mail){
         this.document = document;
         this.password = password;
         this.authorities = "ROLE_ALUMNO";
         this.name = name;
         this.lastName = lastName;
+        this.mail = mail;
     }
 
 
@@ -102,10 +111,14 @@ public class UserCredentials {
         return lastName;
     }
 
+    public String getMail() {
+        return mail;
+    }
+
     public Student getStudent() {
         return this.student;
     }
-
+    
     public Professor getProfessor() {
         return professor;
     }
@@ -125,11 +138,12 @@ public class UserCredentials {
     public void setLastName(String lastName) {
         this.lastName = lastName;
     }
-
+    
     public void setStudent(Student student) {
         this.student = student;
     }
 
+ 
     public void setProfessor(Professor professor) {
         this.professor = professor;
     }

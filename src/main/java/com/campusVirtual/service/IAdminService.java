@@ -2,5 +2,5 @@ package com.campusVirtual.service;
 
 public interface IAdminService {
     
-    public void asignarRoleUser(String role,Long id);
+    public void setRoleUser(String role,Long id);
 }

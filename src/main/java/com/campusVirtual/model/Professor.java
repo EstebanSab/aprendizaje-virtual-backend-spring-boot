@@ -7,9 +7,9 @@ import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 
-@Entity(name="Profesor")
+@Entity(name="Professor")
 @Table(
-    name="profesor",
+    name="professor",
     uniqueConstraints = {
         @UniqueConstraint(name="professor_id_constraint",columnNames = "id")
     }
@@ -57,14 +57,13 @@ public class Professor {
     
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(
-            name="user_id",
+            name="userdata_document",
             referencedColumnName = "document",
             foreignKey = @ForeignKey(
                 name = "user_id_fk"
             )
         )
-        private UserCredentials userCredentials;
-    
+        private Userdata user;
 
 
     
@@ -80,6 +79,10 @@ public class Professor {
         public String getEspeciality() {
             return this.especiality;
         }
+
+        public Userdata getUser() {
+            return user;
+        }
         
         public List<ProfessorInCourse> getProfessorInCourse() {
             return professorInCourse;
@@ -93,19 +96,19 @@ public class Professor {
             this.especiality = especiality;
         }
 
+        public void setUser(Userdata user) {
+            this.user = user;
+        }
+
         public void addProfessorInCourse(ProfessorInCourse professorInCourse) {
             if (!this.professorInCourse.contains(professorInCourse)) {
                 this.professorInCourse.add(professorInCourse);
             }
         }
 
-
-        public void setUserCredentials(UserCredentials userCredentials) {
-            this.userCredentials = userCredentials;
+        @Override
+        public String toString() {
+        return this.especiality+" id:"+this.id;
         }
 
-        public UserCredentials getUserCredentials() {
-            return userCredentials;
-        }
-        
     }

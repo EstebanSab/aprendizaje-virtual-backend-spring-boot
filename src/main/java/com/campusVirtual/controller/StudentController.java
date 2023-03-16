@@ -17,7 +17,7 @@ import com.campusVirtual.service.IStudentService;
 
 @RestController
 @RequestMapping(path="v1/alumnos")
-public class StudentController {
+public class StudentController {/* 
     
     @Autowired
     private IStudentService studentService;
@@ -32,7 +32,7 @@ public class StudentController {
 
     @GetMapping(path="/me")
     @PreAuthorize("hasRole('ROLE_ALUMNO')")
-    public  /*ResponseEntity<AlumnoDto>*/String getAlumnoDtoByContex(){
+    public  /*ResponseEntity<AlumnoDto>String getAlumnoDtoByContex(){
         return SecurityContextHolder.getContext().getAuthentication().getName();
         //return  ResponseEntity.ok()
         //        .body(this.alumnoService.getAlumnoDtoById(id));
@@ -66,5 +66,5 @@ public class StudentController {
         return ResponseEntity.noContent().build();
     }
 
-
+    */
 }

@@ -49,17 +49,17 @@ public class Student {
         @LazyCollection(LazyCollectionOption.FALSE)
         private List<StudentInCourse> studentInCourse = new ArrayList<StudentInCourse>();
         
-
+         
         @OneToOne(cascade = CascadeType.ALL)
         @JoinColumn(
-            name="user_id",
+            name="userdata_document",
             referencedColumnName = "document",
             foreignKey = @ForeignKey(
                 name = "user_id_fk"
             )
         )
-        private UserCredentials userCredentials;
-    
+        private Userdata user;
+        
         public Student(){}
         
         public void setId(Long id) {
@@ -67,10 +67,11 @@ public class Student {
         }
         
     
-        
-        public void setUserCredentials(UserCredentials userCredentials) {
-            this.userCredentials = userCredentials;
-        }
+       public void setUser(Userdata user) {
+           this.user = user;
+       }
+
+      
 
         public void addStudentInCourse(StudentInCourse studentInCourse) {
             if (!this.studentInCourse.contains(studentInCourse)) {
@@ -83,13 +84,16 @@ public class Student {
             return this.id;
         }
 
-        public UserCredentials getUserCredentials() {
-            return this.userCredentials;
+        public Userdata getUser() {
+            return this.user;
         }
-
         public List<StudentInCourse> getStudentInCourse() {
             return studentInCourse;
         }
 
+        @Override
+        public String toString() {
+            return "Student id: "+this.id;
+        }
       
 }

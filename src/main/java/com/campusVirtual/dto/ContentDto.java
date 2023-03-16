@@ -1,5 +1,5 @@
 package com.campusVirtual.dto;
 
-public class ContentInCourseDto {
+public class ContentDto {
     
 }

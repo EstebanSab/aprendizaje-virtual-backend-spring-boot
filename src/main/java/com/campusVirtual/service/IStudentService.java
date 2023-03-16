@@ -7,20 +7,17 @@ import com.campusVirtual.model.Student;
 
 public interface IStudentService {
     
-    public Student saveStudent(Student student,Long document);
+    public void saveStudent(Student student,Long document);
 
-    public Student getSudentById(Long idStudent);
-
-    public Student getSudentDtoById(Long idStudent);
+    public Student getStudentById(Long idStudent);
 
     public List<Student> getAllStudents();
-
-    public List<Student> getAllStudentsDto();
-
+    
     public List<CourseDto> getAllCoursesStudent(Long idStudent);
 
     public boolean existStudentById(Long idStudent);
-        
+    
+    public void deleteStudentById(Long idStudent);
 }
 
 
