@@ -25,15 +25,14 @@ package com.campusVirtual.security.jwtFilter;
     
         
     
-        public String createToken(String nombre,Long id,String authorities) {
+        public String createToken(String document,String authorities) {
             //Claims claims = Jwts.claims().setAudience(authorities).setSubject(nombre).setId(""+id);
     
             Date now = new Date();
             Date validity = new Date(now.getTime() + 3600000); // 1 hour
     
             return Jwts.builder()
-                    .setSubject(nombre)
-                    .setId(""+id)
+                    .setSubject(document)
                     .claim("authorities", authorities)
                     .setIssuedAt(now)
                     .setExpiration(validity)
@@ -43,7 +42,7 @@ package com.campusVirtual.security.jwtFilter;
     
         public  UsernamePasswordAuthenticationToken validateToken(String token) {
             try{
-                String nombre = Jwts.parser()
+                String document = Jwts.parser()
                     .setSigningKey(secretKey)
                     .parseClaimsJws(token)
                     .getBody()
@@ -56,7 +55,7 @@ package com.campusVirtual.security.jwtFilter;
                     .get("authorities");
     
     
-            return new UsernamePasswordAuthenticationToken(nombre, null, /*Collections.emptyList()*/setAuthorities(authorities));
+            return new UsernamePasswordAuthenticationToken(document, null, /*Collections.emptyList()*/setAuthorities(authorities));
             }catch(JwtException jwte){
                 return null;
             }

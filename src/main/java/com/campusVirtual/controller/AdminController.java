@@ -71,6 +71,12 @@ public class AdminController {
         @PathVariable("id") Long id){
          this.adminService.setRoleUser("ROLE_ADMIN", id);             
         }
+
+        @PostMapping(path ="user/{id}/role/professor")
+    public void asignarRoleProfessorUser(
+        @PathVariable("id") Long id){
+         this.adminService.setRoleUser("ROLE_PROFESSOR", id);             
+        }
     
 
 

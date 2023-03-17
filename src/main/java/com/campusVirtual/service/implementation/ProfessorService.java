@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.campusVirtual.dto.CourseDto;
 import com.campusVirtual.exception.ProfesorNotFoundException;
+import com.campusVirtual.mapper.CourseMapper;
 import com.campusVirtual.model.Professor;
 import com.campusVirtual.repository.ProfessorRepository;
 import com.campusVirtual.service.IProfessorService;
@@ -20,6 +21,8 @@ public class ProfessorService implements IProfessorService{
 
     @Autowired
     private IUserDataService userDataService; 
+
+    private CourseMapper cMapper = new CourseMapper();
 
     @Override
     public void saveProfessor(Professor professor, Long document) {
@@ -40,8 +43,11 @@ public class ProfessorService implements IProfessorService{
 
     @Override
     public List<CourseDto> getAllCoursesProfessor(Long idProfessor) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCoursesProfessor'");
+        Professor professor = this.professorRepository.findById(idProfessor).orElseThrow(()-> new ProfesorNotFoundException(idProfessor));
+        
+        List<CourseDto> coursesProfessor= this.cMapper.manyProfessorInCourseToCourseDto(professor.getProfessorInCourse());
+        
+        return coursesProfessor;
     }
 
     @Override

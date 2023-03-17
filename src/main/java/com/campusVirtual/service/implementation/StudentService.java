@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 
 import com.campusVirtual.dto.CourseDto;
 import com.campusVirtual.exception.AlumnoNotFoundException;
+import com.campusVirtual.mapper.CourseMapper;
 import com.campusVirtual.model.Student;
 import com.campusVirtual.repository.StudentRepository;
 import com.campusVirtual.service.IStudentService;
@@ -22,6 +23,8 @@ public class StudentService implements IStudentService {
 
     @Autowired
     private IUserDataService userDataService;   
+
+    private CourseMapper cMapper = new CourseMapper();
 
     @Override
     public void saveStudent(Student student, Long document) {
@@ -45,13 +48,11 @@ public class StudentService implements IStudentService {
 
     @Override
     public List<CourseDto> getAllCoursesStudent(Long idStudent) {
-        Student alumno = this.studentRepository.findById(idStudent).orElseThrow(()-> new AlumnoNotFoundException(idStudent));
+        Student student = this.studentRepository.findById(idStudent).orElseThrow(()-> new AlumnoNotFoundException(idStudent));
         
-        //List<CourseDto> cursosAlumnoById= cursoMapper.manyAlumnoEnCursoToCursoDto(alumno.getAlumnoEnCurso()); 
+        List<CourseDto> coursesStudent= this.cMapper.manyStudentInCourseToCourseDto(student.getStudentInCourse());
         
-        //return cursosAlumnoById;
-        
-        throw new UnsupportedOperationException("Unimplemented method 'getAllCoursesStudent'");
+        return coursesStudent;
     }
 
     @Override

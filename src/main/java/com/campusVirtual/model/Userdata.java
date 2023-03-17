@@ -83,7 +83,7 @@ public class Userdata {
         String mail){
         this.document = document;
         this.password = password;
-        this.authorities = "ROLE_ALUMNO";
+        this.authorities = "ROLE_STUDENT";
         this.name = name;
         this.lastName = lastName;
         this.mail = mail;

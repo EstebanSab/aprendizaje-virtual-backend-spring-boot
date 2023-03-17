@@ -6,8 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-
+import com.campusVirtual.dto.CourseDto;
 import com.campusVirtual.exception.CursoNotFoundException;
+import com.campusVirtual.mapper.CourseMapper;
 import com.campusVirtual.model.Student;
 import com.campusVirtual.model.StudentInCourse;
 import com.campusVirtual.model.Course;
@@ -23,7 +24,7 @@ public class CourseService implements ICourseService {
     @Autowired
     private CourseRepository courseRepository;
 
-   
+    private CourseMapper cMapper = new CourseMapper();
 
    
 
@@ -36,15 +37,27 @@ public class CourseService implements ICourseService {
     public Course getCourseById(Long id){
         return this.courseRepository.findById(id).orElseThrow(()-> new CursoNotFoundException(id));
     }
+    
+    @Override
+    public CourseDto getCourseDtoById(Long id){
+       return  this.cMapper.courseToCourseDto(this.getCourseById(id));
+    }
+
+    
 
 
     @Override
     public List<Course> getAllCourses(){
         return this.courseRepository.findAll();
-        }
+    }
 
     @Override
-    public void deleteCursoById(Long idCourse){
+    public List<CourseDto> getAllCoursesDtos(){
+       return this.cMapper.manyCourseToCourseDto(getAllCourses());
+    }
+
+    @Override
+    public void deleteCourseById(Long idCourse){
         if(this.courseRepository.existsById(idCourse)){
             this.courseRepository.deleteById(idCourse);
         }else{
@@ -53,7 +66,7 @@ public class CourseService implements ICourseService {
     }
 
     @Override
-    public boolean existsCursoById(Long idCourse) {
+    public boolean existsCourseById(Long idCourse) {
         return this.courseRepository.existsById(idCourse);
     }
 
@@ -83,6 +96,16 @@ public class CourseService implements ICourseService {
             students.add(studentR.getStudent());
         }
         return students;
+    }
+
+    @Override
+    public CourseDto saveCourseDto(CourseDto courseDto) {
+      Course course = new Course(courseDto.getName());
+      
+      course = this.courseRepository.save(course);
+
+      return this.cMapper.courseToCourseDto(course);
+
     }
 
 

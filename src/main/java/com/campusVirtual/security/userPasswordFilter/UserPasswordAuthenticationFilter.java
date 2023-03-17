@@ -55,7 +55,7 @@ public class UserPasswordAuthenticationFilter extends UsernamePasswordAuthentica
         
         UserDetailsImplementacion userImp= (UserDetailsImplementacion)authResult.getPrincipal();
         
-        String token = tokenJwtUtil.createToken(userImp.getUsername(),null,userImp.getStringAuthorities());
+        String token = tokenJwtUtil.createToken(userImp.getUsername(),userImp.getStringAuthorities());
 	
 	//response.addHeader("Access-Control-Allow-Origin", "*,*");	
 

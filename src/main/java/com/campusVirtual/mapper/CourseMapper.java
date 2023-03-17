@@ -1,61 +1,75 @@
 package com.campusVirtual.mapper;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import java.util.ArrayList;
+
+import com.campusVirtual.dto.CourseDto;
+import com.campusVirtual.model.Course;
+import com.campusVirtual.model.ProfessorInCourse;
+import com.campusVirtual.model.StudentInCourse;
+import com.campusVirtual.service.ICourseService;
 
 
 public class CourseMapper {
-    /* 
 
     @Autowired
-    ICourseService cursoService;
+    ICourseService courseService;
 
-    public Course cursoDtoToCurso(CourseDto cursoDto) {
-        Course nuevoCurso = new Course(cursoDto.getNombre());
-        return nuevoCurso;
-    }
 
-    public CourseDto cursoToCursoDto(Course curso){
-       CourseDto cursoDto= new CourseDto(curso.getId(),curso.getNombre());
 
-       return cursoDto;
-    }
 
-    public List<CourseDto> manyCursoToCursoDto(List<Course>  cursos) {
-        List<CourseDto> cursosDtos = new ArrayList<>();
-        
-        for (Course curso : cursos) {
-            cursosDtos.add(
-                cursoToCursoDto(curso)
-            );
-        }
+    public CourseDto courseToCourseDto(Course course){
+        CourseDto cDto = new CourseDto();
 
-        return cursosDtos;
+        cDto.setId(course.getId());
+        cDto.setName(course.getName());
+
+        return cDto;
+
     }
     
-
-
-    public List<CourseDto> manyAlumnoEnCursoToCursoDto(List<StudentInCourse> alumnoEnCurso) {
-        List<CourseDto> cursosDto = new ArrayList<CourseDto>();
-
-        for (StudentInCourse aec : alumnoEnCurso) {
-            cursosDto.add(
-                cursoToCursoDto(aec.getCurso())
+    
+    public List<CourseDto> manyCourseToCourseDto(List<Course>  courses) {
+        List<CourseDto> coursesDtos = new ArrayList<>();
+        
+        for (Course course : courses) {
+            coursesDtos.add(
+                courseToCourseDto(course)
             );
         }
-        
-        return cursosDto;
+
+        return coursesDtos;
     }
 
 
-    public List<CourseDto> manyProfesorEnCursoToCursoDto(List<ProfessorInCourse> profesorEnCurso) {
-        List<CourseDto> cursosDto = new ArrayList<CourseDto>();
-        
-        for (ProfessorInCourse pec : profesorEnCurso) {
-            cursosDto.add(
-                cursoToCursoDto(pec.getCurso())
+    public List<CourseDto> manyStudentInCourseToCourseDto(List<StudentInCourse>  sics) {
+        List<CourseDto> coursesDtos = new ArrayList<>();
+
+        for (StudentInCourse studentInCourse : sics) {
+            coursesDtos.add(
+                courseToCourseDto(studentInCourse.getCourse())
             );
         }
-        
-        return cursosDto;
+
+        return coursesDtos;
     }
-*/
+    
+    public List<CourseDto> manyProfessorInCourseToCourseDto(List<ProfessorInCourse> pics){
+
+        List<CourseDto> coursesDtos = new ArrayList<>();
+
+        for (ProfessorInCourse professorInCourse : pics) {
+            coursesDtos.add(
+                courseToCourseDto(professorInCourse.getCourse())
+            );
+        }
+
+        return coursesDtos;
+
+    }
+
+
 }
