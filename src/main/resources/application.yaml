@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    url: ${DATABASE_URL:jdbc:postgresql://localhost:5432/usuario}
+    username: ${DATABASE_USER:postgres}
+    password: ${DATABASE_PASSWORD:-}
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        format-sql: 'true'
+    hibernate:
+      ddl-auto: create-drop
