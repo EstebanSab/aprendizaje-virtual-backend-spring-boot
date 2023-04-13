@@ -8,11 +8,11 @@ Para poder descargar la Api:
 docker pull esdocker13/campus-api-test
 
 Para poder correr la Api:
-docker run -p 8080:8080 -e DATABASE_URL='<database>' -e DATABASE_PASSWORD=password esdocker13/campus-api-test .
+docker run -p 8080:8080 -e DATABASE_URL=database -e DATABASE_PASSWORD=password esdocker13/campus-api-test .
 
 La app comenzará en http://localhost:8080.
 
-El link de '<database>' debe ser asi por ejemplo:
+El link de database debe ser asi por ejemplo:
 jdbc:postgresql://containers.app:1111/db 
 
 
